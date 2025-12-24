@@ -1,0 +1,70 @@
+<mat-card>
+  <h2>Create Trip</h2>
+
+  <mat-form-field>
+    <input matInput placeholder="Destination" [(ngModel)]="destination">
+  </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate"  [min]="today">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>End Date</mat-label>
+        <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate"  [min]="startDate">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+    </mat-form-field>
+
+
+  <mat-form-field>
+    <input matInput placeholder="Activities (comma separated)" [(ngModel)]="activities">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="addTrip()">Add Trip</button>
+</mat-card>
+
+<!-- Trip Details Table -->
+<mat-card *ngIf="trips.length > 0" style="margin-top: 20px;">
+  <h2>Trip Details</h2>
+
+  <table mat-table [dataSource]="trips" class="mat-elevation-z8">
+
+    <!-- Destination Column -->
+    <ng-container matColumnDef="destination">
+      <th mat-header-cell *matHeaderCellDef> Destination </th>
+      <td mat-cell *matCellDef="let trip"> {{ trip.destination }} </td>
+    </ng-container>
+
+    <!-- Start Date Column -->
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef> Start Date </th>
+      <td mat-cell *matCellDef="let trip">
+        {{ trip.startDate | date }}
+      </td>
+    </ng-container>
+
+    <!-- End Date Column -->
+    <ng-container matColumnDef="endDate">
+      <th mat-header-cell *matHeaderCellDef> End Date </th>
+      <td mat-cell *matCellDef="let trip">
+        {{ trip.endDate | date }}
+      </td>
+    </ng-container>
+
+    <!-- Activities Column -->
+    <ng-container matColumnDef="activities">
+      <th mat-header-cell *matHeaderCellDef> Activities </th>
+      <td mat-cell *matCellDef="let trip">
+        {{ trip.activities.join(', ') }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+</mat-card>

@@ -1,0 +1,18 @@
+<mat-form-field>
+  <mat-label>Select Trip</mat-label>
+  <mat-select [(ngModel)]="selectedTrip">
+    <mat-option *ngFor="let trip of trips" [value]="trip">
+      {{ trip.destination }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-card *ngIf="selectedTrip">
+  <h2>{{ selectedTrip.destination }} Itinerary</h2>
+
+  <mat-list>
+    <mat-list-item *ngFor="let activity of selectedTrip.activities; let i = index">
+      Day {{ i + 1 }} – {{ activity }}
+    </mat-list-item>
+  </mat-list>
+</mat-card>
